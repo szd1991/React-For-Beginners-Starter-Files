@@ -3,6 +3,7 @@ import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
 import sampleFishes from '../sample-fishes';
+import Fish from './Fish';
 
 class App extends React.Component {
     state = {
@@ -14,7 +15,7 @@ class App extends React.Component {
         // 1. take a copy of the existing state
         const fishes = { ...this.state.fishes };
         // 2. add our new fish to fishes
-        fishes[`fish${Date.now()}`] = fish;
+        fishes[`fish_${Date.now()}`] = fish;
         // 3. set the new fishes object to state
         this.setState({
             fishes: fishes
@@ -30,7 +31,9 @@ class App extends React.Component {
             <div className="catch-of-the-day">
                 <div className="menu">                    
                     <Header tagline="Fresh Seafood Market"/>
-                    
+                    <ul className="fishes">
+                        {Object.keys(this.state.fishes).map(key => <Fish key={key} details={this.state.fishes[key]} />)}
+                    </ul>
                 </div>
                 <Order />
                 <Inventory addFish={this.addFish} loadSampleFishes={this.loadSampleFishes} />
